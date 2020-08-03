@@ -1,0 +1,33 @@
+{
+  "name": "messenger_api",
+  "version": "1.0.0",
+  "description": "little rest api to handle messenger backend request",
+  "main": "index.js",
+  "scripts": {
+    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "node ./build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RocaManuel/messenger_api.git"
+  },
+  "author": "Manuel Roca",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RocaManuel/messenger_api/issues"
+  },
+  "homepage": "https://github.com/RocaManuel/messenger_api#readme",
+  "dependencies": {
+    "@types/express": "^4.17.7",
+    "@types/terminal-kit": "^1.28.2",
+    "express": "^4.17.1",
+    "terminal-kit": "^1.42.0",
+    "typescript": "^3.9.7"
+  },
+  "devDependencies": {
+    "tslint": "^6.1.3"
+  }
+}
