@@ -8,15 +8,21 @@ export const config: ConnectionOptions = {
    "username": "zicgedciewboti",
    "password": "a05fb891d75caf969f630ebbd60514e181e21e75959a1379ac31c1f3bc3ecaf5",
    "database": "d79qr6pooekr94",
+   ssl: true,
+   extra: {
+     ssl: {
+       rejectUnauthorized: false,
+     },
+   },
    "synchronize": true,
    "logging": false,
    "entities": [
-      "src/entity/**/*.ts"
+      "build/entity/**/*.js"
    ],
    "migrations": [
-      "src/migration/**/*.ts"
+      "build/migration/**/*.js"
    ],
    "subscribers": [
-      "src/subscriber/**/*.ts"
+      "build/subscriber/**/*.js"
    ]
 }
