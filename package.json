@@ -4,8 +4,6 @@
   "description": "little rest api to handle messenger backend request",
   "main": "index.js",
   "scripts": {
-    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
-    "build": "tsc",
     "prestart": "npm run build",
     "start": "node ./build",
     "test": "echo \"Error: no test specified\" && exit 1"
