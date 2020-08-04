@@ -1,4 +1,5 @@
 import express = require('express');
+import cors = require('cors');
 import UsersController from './controllers/users';
 
 export class App {
@@ -7,24 +8,8 @@ export class App {
 
   public getApp() {
     this.setRoutes();
-    this.app.use(this.getCORS());
+    this.app.use(cors());
     return this.app;
-  }
-
-  private getCORS() {
-    return (req: any, res: express.Response, next: express.NextFunction) => {
-      res.header('Access-Control-Allow-Origin', '*');
-      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-
-      // intercept OPTIONS method
-      if ('OPTIONS' === req.method) {
-        res.send(200);
-      }
-      else {
-        next();
-      }
-    }
   }
 
   private setRoutes() {
