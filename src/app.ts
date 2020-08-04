@@ -7,8 +7,8 @@ export class App {
   app: express.Application = express();
 
   public getApp() {
-    this.setRoutes();
     this.app.use(cors());
+    this.setRoutes();
     return this.app;
   }
 

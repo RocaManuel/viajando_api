@@ -17,7 +17,7 @@ class UsersController {
 
   private async login(req: any, res: Response) {
     try {
-      return res.status(200).json({ success: true });
+      return res.status(200).json({ auth: true });
     } catch (e) {
       t.terminal(e);
     }
