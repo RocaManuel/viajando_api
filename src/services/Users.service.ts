@@ -4,18 +4,10 @@ import telkit from 'terminal-kit';
 
 export class UsersSerivce {
 
-  public async getUsers() {
-    return await getConnection().manager.getRepository(User)
-      .findOne({
-        where: { id: 1 }
-      });
-  }
 
-  public async getUser(password: string, email: string) {
+  public async getUser(params: any) {
     return await getConnection().manager.getRepository(User)
-      .findOne({
-        where: { email, password }
-      });
+      .findOne(params);
   }
 
   public async postUser(params: any) {
