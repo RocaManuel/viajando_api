@@ -3,10 +3,16 @@ import { Auth } from "../guardians/auth";
 import telkit from 'terminal-kit';
 import bodyParser from 'body-parser';
 import { UsersSerivce } from "../../src/services/Users.service";
+import { ORMHelper } from "../../src/helper/orm.helper";
+import { GeneralHelper } from "../../src/helper/general.helper";
 
 class UsersController {
+
   private auth = new Auth();
   private usersService = new UsersSerivce();
+  private ormHelper = new ORMHelper();
+  private generalHelper = new GeneralHelper();
+
   router: Router;
 
   private jsonParser = bodyParser.json();
@@ -22,8 +28,10 @@ class UsersController {
 
   private async login(req: any, res: Response) {
     try {
-      const { email, password } = req.query;
-      const response = await this.usersService.getUser(password, email);
+      const params = this.ormHelper.formatParamsForWhere(req.query);
+      const requiredParams = ['email', 'password'];
+      if(!this.generalHelper.validateRequiredParams(req.query, requiredParams)) return res.status(400).json({ error: 'missing params' });
+      const response = await this.usersService.getUser(params);
       if (!response) res.status(404).json({ error: 'not user found' });
       return res.status(200).json({ auth: true, response });
     } catch (e) {
