@@ -1,18 +1,59 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, EntityOptions} from "typeorm";
 
-@Entity()
+const config: EntityOptions = {
+    name: 'users',
+    synchronize: false
+}
+
+@Entity(config)
 export class User {
 
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    firstName: string;
+    country: string;
 
     @Column()
-    lastName: string;
+    created_at: Date;
 
     @Column()
-    age: number;
+    email: string;
+
+    @Column()
+    is_driver: boolean;
+
+    @Column()
+    is_email_verified: boolean;
+
+    @Column()
+    is_user_verified: boolean;
+
+    @Column()
+    last_seen_at: Date;
+
+    @Column()
+    lastname: string;
+
+    @Column()
+    location: string;
+
+    @Column()
+    name: string;
+
+    @Column()
+    password: string;
+
+    @Column()
+    profile_picture: string
+
+    @Column()
+    rate: number;
+
+    @Column()
+    tel: string;
+
+    @Column()
+    second_step_auth: boolean;
 
 }

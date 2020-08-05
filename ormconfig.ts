@@ -17,7 +17,7 @@ export const config: ConnectionOptions = {
    "synchronize": true,
    "logging": false,
    "entities": [
-      "build/entity/**/*.js"
+      "./build/src/entity/*.js"
    ],
    "migrations": [
       "build/migration/**/*.js"
