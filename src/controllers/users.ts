@@ -41,9 +41,9 @@ class UsersController {
 
   private async register(req: any, res: Response) {
     try {
-      const params = req.body;
-      telkit.terminal(req.body);
-      const response = await this.usersService.postUser(params);
+      const params = this.ormHelper.getUserBasics(req.body);
+      const user = this.ormHelper.getUserWithEntity(params);
+      const response = await this.usersService.postUser(user);
       return res.status(200).json({ success: true });
     } catch (e) {
       telkit.terminal(e);
