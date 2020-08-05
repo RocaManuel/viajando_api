@@ -1,5 +1,5 @@
-import express = require('express');
-import cors = require('cors');
+import cors from 'cors';
+import express from "express";
 import UsersController from './controllers/users';
 
 export class App {
