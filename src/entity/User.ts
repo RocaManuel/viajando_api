@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, EntityOptions} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, EntityOptions, OneToMany} from "typeorm";
+import { Trips } from "./Trisps";
 
 const config: EntityOptions = {
     name: 'users',
@@ -56,4 +57,7 @@ export class User {
     @Column()
     second_step_auth: boolean;
 
+    @OneToMany(type => Trips, trip => trip.driver_id)
+    trips: Trips[];
+    
 }
