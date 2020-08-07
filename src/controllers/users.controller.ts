@@ -2,9 +2,10 @@ import { Router, Response } from "express";
 import { Auth } from "../guardians/auth";
 import telkit from 'terminal-kit';
 import bodyParser from 'body-parser';
-import { UsersSerivce } from "../../src/services/Users.service";
-import { ORMHelper } from "../../src/helper/orm.helper";
-import { GeneralHelper } from "../../src/helper/general.helper";
+import { UsersSerivce } from "../services/Users.service";
+import { ORMHelper } from "../helper/orm.helper";
+import { GeneralHelper } from "../helper/general.helper";
+
 
 class UsersController {
 
