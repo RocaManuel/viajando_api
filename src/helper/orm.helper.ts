@@ -1,5 +1,7 @@
 import { User } from "../../src/entity/User";
 import { UserInterface, Params } from "../../src/interfaces/User.interface";
+import { Trips } from "../entity/Trips";
+import moment from 'moment';
 
 export class ORMHelper {
 
@@ -12,7 +14,7 @@ export class ORMHelper {
     return response;
   }
 
-  public getUserWithEntity(params: Params) {
+  private getUserWithEntity(params: Params) {
     const user: any = new User();
     // tslint:disable-next-line: forin
     for (const param  in params) {
@@ -31,6 +33,25 @@ export class ORMHelper {
       profile_picture: '',
       second_step_auth: false
     }
-    return { ...user, ...params };
+    return this.getUserWithEntity({ ...user, ...params });
+  }
+
+  private getTripWithEntity(params: any) {
+    const trip: any = new Trips();
+    // tslint:disable-next-line: forin
+    for (const param  in params) {
+      trip[param] = params[param];
+    }
+    return trip;
+  }
+
+  public createTrip(params: any) {
+    const trip = {
+      ...params,
+      start_on: moment(new Date(params.start_on)).format(),
+      end_on: moment(new Date(params.end_on)).format(),
+      status: 'ACTIVE'
+    }
+    return this.getTripWithEntity(trip);
   }
 }

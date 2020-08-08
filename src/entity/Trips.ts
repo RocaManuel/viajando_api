@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, EntityOptions, JoinColumn, ManyToMany} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, EntityOptions, JoinColumn, ManyToMany } from "typeorm";
 import { User } from "./User";
 import { Cars } from "./Car";
 
@@ -9,15 +9,15 @@ const config: EntityOptions = {
     synchronize: false
 }
 
-export enum Status{
- ACTIVE = "ACTIVE",
- COMPLETED = "COMPLETED",
- DELETED = "DELETED"     
+export enum Status {
+    ACTIVE = "ACTIVE",
+    COMPLETED = "COMPLETED",
+    DELETED = "DELETED"
 }
 
-@Entity(config) 
+@Entity(config)
 export class Trips {
-    
+
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -58,15 +58,15 @@ export class Trips {
     max_radio_killometers: number;
 
     @Column()
-    status: Status; 
+    status: Status;
 
     @ManyToOne(type => User, user => user.id)
-    @JoinColumn({ name: "driver_id", referencedColumnName: "id"})
+    @JoinColumn({ name: "driver_id", referencedColumnName: "id" })
     user: User;
-    
+
     @ManyToMany(type => Cars, car => car.id)
-    @JoinColumn({ name: "car_id", referencedColumnName: "id"})
+    @JoinColumn({ name: "car_id", referencedColumnName: "id" })
     car: Cars;
-    
-    
+
+
 }
