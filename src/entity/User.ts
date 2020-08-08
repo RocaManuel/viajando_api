@@ -1,5 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, EntityOptions, OneToMany} from "typeorm";
-import { Trips } from "./Trisps";
+import { Entity, PrimaryGeneratedColumn, Column, EntityOptions, OneToMany } from "typeorm";
+import { Trips } from "./Trips";
 
 const config: EntityOptions = {
     name: 'users',
@@ -42,7 +42,7 @@ export class User {
     @Column()
     name: string;
 
-    @Column({select: false})
+    @Column({ select: false })
     password: string;
 
     @Column()
@@ -59,5 +59,5 @@ export class User {
 
     @OneToMany(type => Trips, trip => trip.driver_id)
     trips: Trips[];
-    
+
 }

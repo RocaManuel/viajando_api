@@ -1,5 +1,5 @@
 import { getConnection } from "typeorm";
-import { Trips, Status } from "../entity/Trisps";
+import { Trips, Status } from "../entity/Trips";
 import telkit from 'terminal-kit';
 
 export class TripsSerivce {
