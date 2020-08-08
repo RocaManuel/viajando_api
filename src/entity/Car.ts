@@ -2,13 +2,13 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, EntityOptions, JoinC
 import { User } from "../entity/User";
 
 const config: EntityOptions = {
-    name: 'cars',
+    name: 'users_cars',
     synchronize: false
 }
 
-@Entity(config) 
+@Entity(config)
 export class Cars {
-    
+
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -19,8 +19,8 @@ export class Cars {
     car_model : string;
 
     @Column()
-    car_age : number;
-    
+    car_age : Date;
+
     @Column()
     car_size : number;
 
