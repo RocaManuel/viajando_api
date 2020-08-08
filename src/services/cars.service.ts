@@ -10,12 +10,12 @@ export class CarsSerivce {
         });
     }
 
-    public async createCar() {
-        const car = new Cars();
-        car.driver_id = 5;
-        car.car_size = 4;
-        car.car_model = 'Alpha Romeo'
-        car.car_age = 5;
+    public async createCar(car: Cars) {
         return await getConnection().manager.save(car)
     }
+
+    public async getUserCars(params: any) {
+        return await getConnection().manager.getRepository(Cars)
+          .find(params)
+      }
 }

@@ -6,6 +6,7 @@ import { UsersSerivce } from "../services/Users.service";
 import { ORMHelper } from "../helper/orm.helper";
 import { GeneralHelper } from "../helper/general.helper";
 import { ParamsHelper } from "../helper/params.helper";
+import { CarsSerivce } from "../services/cars.service";
 
 
 class UsersController {
@@ -14,6 +15,7 @@ class UsersController {
   private jsonParser = bodyParser.json();
 
   private usersService = new UsersSerivce();
+  private carsService = new CarsSerivce();
 
   private ormHelper = new ORMHelper();
   private generalHelper = new GeneralHelper();
@@ -29,6 +31,8 @@ class UsersController {
   private init() {
     this.router.get('/', (req: any, res: Response) => this.login(req, res));
     this.router.post('/', this.jsonParser, this.paramsHelper.validateParams, (req: any, res: Response) => this.register(req, res));
+    this.router.get('/cars', this.jsonParser, this.auth.authenticateToken, (req: any, res: Response) => this.getUserCars(req, res));
+    this.router.get('/trips', (req: any, res: Response) => this.login(req, res));
   }
 
   private async login(req: any, res: Response) {
@@ -55,6 +59,17 @@ class UsersController {
       return res.status(200).json({ success: true, token, response });
     } catch (e) {
       telkit.terminal(e);
+    }
+  }
+
+  private async getUserCars(req: any, res: Response) {
+    try {
+      const id = req.user_id;
+      const params = this.ormHelper.formatParamsForWhere({ driver_id: id });
+      const response = await this.carsService.getUserCars(params);
+      return res.status(200).json({ response });
+    } catch (e) {
+      return res.status(400).json({ error: e });
     }
   }
 

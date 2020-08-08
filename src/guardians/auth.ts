@@ -29,6 +29,7 @@ export class Auth {
     };
     jsonwebtoken.verify(token, privateKEY, tokenOpts, (err: any, user: any) => {
       if (err) return res.sendStatus(403);
+      req.user_id = user.id;
       next()
     })
   }

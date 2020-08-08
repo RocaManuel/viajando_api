@@ -17,6 +17,12 @@ export const Params: { [k: string]: any } = Object.freeze({
       is_periodic: 'boolean',
       max_radio_killometer: 'number',
       periodic_days: 'number'
+    },
+    '/api/v1/cars': {
+      driver_id: 'number',
+      car_size: 'number',
+      car_model: 'string',
+      car_age: 'string'
     }
   }
 })
