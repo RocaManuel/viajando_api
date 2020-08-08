@@ -8,6 +8,6 @@ const port = process.env.PORT || 3000
 
 createConnection(config).then(async (_connection) => {
   app.getApp().listen(port, () => {
-    telkit.terminal('App runing and listen port', port);
+    telkit.terminal('App runing and listen port: ', port);
   });
   }).catch(error => console.log(error));

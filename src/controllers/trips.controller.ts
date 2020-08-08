@@ -4,6 +4,7 @@ import { GeneralHelper } from '../helper/general.helper';
 import {Trips, Status} from '../entity/Trisps'
 import { TripsSerivce } from '../services/Trips.service';
 import { CarsSerivce } from '../services/cars.service';
+import { Auth } from '../guardians/auth';
 
 class TripsController {
     constructor() {
@@ -13,11 +14,13 @@ class TripsController {
     private generalHelper = new GeneralHelper();
     private tripsService = new TripsSerivce();
     // private carsService = new CarsSerivce();
+    private auth = new Auth();
     private jsonParser = bodyParser.json();
     public router: Router;
     private init(){
-        this.router.post('/', this.jsonParser, (req: any, res: Response) => this.createTrip(req, res));
+        this.router.post('/', this.jsonParser, this.auth.authenticateToken ,(req: any, res: Response) => this.createTrip(req, res));
     }
+
     private async createTrip(req: any, res: Response){
         try{
             // const params = req.body;
@@ -25,11 +28,10 @@ class TripsController {
             //                         'city_name', 'price', 'start_on', 'end_on', 'is_periodic',
             //                         'max_rad_km', 'status'];
             // if(!this.generalHelper.validateRequiredParams(req.query, requiredParams)) return res.status(400).json({ error: 'missing params' });
-                
             // console.log(params);
             // const response = this.tripsService.postTrips();
             // const a = this.carsService.createCar();
-            const response = await this.tripsService.getTrip();
+            const response = await this.tripsService.getTrip({});
             res.status(200).json({ succes: true, response });
         }
         catch(e){};
