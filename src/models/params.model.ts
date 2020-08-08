@@ -1,7 +1,8 @@
 export const Params: { [k: string]: any } = Object.freeze({
   'GET': {
     '/api/v1/users': { email: 'string', password: 'string' },
-    '/api/v1/trips': { id: 'string' }
+    '/api/v1/trips': { id: 'string' },
+    '/api/v1/cars': { id: 'string' }
   },
   'POST': {
     '/api/v1/trips': {
