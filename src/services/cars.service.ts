@@ -3,11 +3,9 @@ import { Cars } from "../../src/entity/Car";
 import telkit from 'terminal-kit';
 
 export class CarsSerivce {
-    public async getCar() {
-      return await getConnection().manager.getRepository(Cars)
-        .findOne({
-            where: { id: 1 }
-        });
+
+    public async getCar(params: any) {
+      return await getConnection().manager.getRepository(Cars).findOne(params)
     }
 
     public async createCar(car: Cars) {
@@ -15,7 +13,7 @@ export class CarsSerivce {
     }
 
     public async getUserCars(params: any) {
-        return await getConnection().manager.getRepository(Cars)
-          .find(params)
-      }
+        return await getConnection().manager.getRepository(Cars).find(params)
+    }
+
 }
