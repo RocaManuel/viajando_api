@@ -7,6 +7,7 @@ import { ORMHelper } from "../helper/orm.helper";
 import { GeneralHelper } from "../helper/general.helper";
 import { ParamsHelper } from "../helper/params.helper";
 import { CarsSerivce } from "../services/cars.service";
+import { EncryptHelper } from "../helper/encrypt.helper";
 
 
 class UsersController {
@@ -20,6 +21,7 @@ class UsersController {
   private ormHelper = new ORMHelper();
   private generalHelper = new GeneralHelper();
   private paramsHelper = new ParamsHelper();
+  private encryptionHelper = new EncryptHelper();
 
   public router: Router;
 
@@ -38,6 +40,7 @@ class UsersController {
   private async login(req: any, res: Response) {
     try {
       const params = this.ormHelper.formatParamsForWhere(req.query);
+      params.where.password = await this.encryptionHelper.encryptPassword(req.query.password);
       const response = await this.usersService.getUser(params);
       if (!response) res.status(404).json({ error: 'not user found' });
 
@@ -52,7 +55,7 @@ class UsersController {
 
   private async register(req: any, res: Response) {
     try {
-      const user = this.ormHelper.getUserBasics(req.body);
+      const user = await this.ormHelper.getUserBasics(req.body);
       const response = await this.usersService.postUser(user);
       const { name, lastname, id } = response;
       const token = await this.auth.generateToken({ name, lastname, id });
