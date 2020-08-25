@@ -5,7 +5,7 @@ import fs from 'fs';
 export class Auth {
 
   public async generateToken(params: any) {
-    const privateKEY = await fs.readFileSync('utils/keys/jwtRS256.key', 'utf8');
+    const privateKEY = process.env.TOKEN_SECURE_KEY
     const tokenOpts: SignOptions = {
       issuer: 'WORKSTATION',
       subject: 'rocamanuelignacio@gmail.com',
@@ -17,7 +17,7 @@ export class Auth {
   }
 
   public async authenticateToken(req: Request, res: Response, next: NextFunction) {
-    const privateKEY = await fs.readFileSync('utils/keys/jwtRS256.key', 'utf8');
+    const privateKEY = process.env.TOKEN_SECURE_KEY
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1]
     if (!token) return res.sendStatus(401);
