@@ -4,7 +4,8 @@ import { Params } from "../models/params.model";
 export class ParamsHelper {
 
   public validateParams(req: Request, res: Response, next: NextFunction) {
-    const requiredParams: any = Params[req.method][req.baseUrl];
+    const url = req.originalUrl.split('?');
+    const requiredParams: any = Params[req.method][url[0]];
     const params = req.method === 'GET' ? req.query : req.body;
     // tslint:disable-next-line: no-shadowed-variable
     const validateParams = (params: any, requiredParams: any) => {

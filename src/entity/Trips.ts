@@ -31,10 +31,16 @@ export class Trips {
     passenger_amount: number;
 
     @Column()
-    from: string;
+    from_lat: number;
 
     @Column()
-    to: string;
+    from_lng: number;
+
+    @Column()
+    to_lat: number;
+
+    @Column()
+    to_lng: number;
 
     @Column()
     city_name: string;

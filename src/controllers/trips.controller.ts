@@ -3,7 +3,6 @@ import bodyParser from 'body-parser';
 import { TripsSerivce } from '../services/Trips.service';
 import { Auth } from '../guardians/auth';
 import { ParamsHelper } from '../helper/params.helper';
-import { GeneralHelper } from '../helper/general.helper';
 import { ORMHelper } from '../helper/orm.helper';
 
 class TripsController {
@@ -16,12 +15,12 @@ class TripsController {
     private tripsService = new TripsSerivce();
 
     private paramsHelper = new ParamsHelper();
-    private generalHelper = new GeneralHelper();
     private ormHelper = new ORMHelper();
 
     private init() {
         this.router.get('/', this.jsonParser, this.auth.authenticateToken, this.paramsHelper.validateParams, (req: any, res: Response) => this.getTripById(req, res));
         this.router.post('/', this.jsonParser, this.auth.authenticateToken, this.paramsHelper.validateParams, (req: any, res: Response) => this.createTrip(req, res));
+        this.router.get('/search_trip', this.jsonParser, this.auth.authenticateToken, this.paramsHelper.validateParams, (req: any, res: Response) => this.searchTrip(req, res));
     }
 
     private async getTripById(req: any, res: Response) {
@@ -44,6 +43,17 @@ class TripsController {
         catch (e) {
             return res.status(400).json({ error: e });
         };
+    }
+
+    private async searchTrip(req: any, res: Response) {
+        try {
+            console.log(req.query);
+            const params = await this.ormHelper.searchTripParams(req.query);
+            const trips = await this.tripsService.getTripsByLatitude(params);
+            return res.json({ trips });
+        } catch (e) {
+            return res.json({ error: e });
+        }
     }
 
     constructor() {

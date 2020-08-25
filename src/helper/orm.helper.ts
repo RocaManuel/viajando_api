@@ -2,9 +2,13 @@ import { UserInterface, Params } from "../../src/interfaces/User.interface";
 import moment from 'moment';
 import { Cars } from "../entity/Car";
 import { User } from "../entity/User";
-import { Trips } from "../entity/Trips";
+import { Trips, Status as TripStatus } from "../entity/Trips";
+import { Between } from "typeorm";
+import { GeolocationHelper } from "./geolocation.helper";
 
 export class ORMHelper {
+
+  private geolocationHelper = new GeolocationHelper();
 
   public formatParamsForWhere(params: any) {
     const response = { where: {} };
@@ -68,4 +72,29 @@ export class ORMHelper {
     }
     return this.getTripWithEntity(trip);
   }
+
+  public async searchTripParams(params: any) {
+    const fromLat = Number(params.from_lat);
+    const fromLng = Number(params.from_lng);
+    const range = Number(params.range);
+    const toLat = Number(params.to_lat);
+    const toLng = Number(params.to_lng);
+    const geoFrom = await this.geolocationHelper.getBoundLocation(fromLat, fromLng, range);
+    const geoTo = await this.geolocationHelper.getBoundLocation(toLat, toLng, range);
+    const start_on = new Date(params.start_on);
+    const end_on = new Date(params.end_on);
+    const trip = {
+      where: {
+        from_lat: Between(geoFrom.minLat, geoFrom.maxLat),
+        from_lng: Between(geoFrom.minLng, geoFrom.maxLng),
+        to_lat: Between(geoTo.minLat, geoTo.maxLat),
+        to_lng: Between(geoTo.minLng, geoTo.maxLng),
+        start_on,
+        end_on,
+        status: TripStatus.ACTIVE
+      }
+    }
+    return trip;
+  }
+
 }
