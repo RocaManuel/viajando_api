@@ -1,16 +1,18 @@
-import { UserInterface, Params } from "../../src/interfaces/User.interface";
+import { Params } from "../../src/interfaces/User.interface";
 import moment from 'moment';
 import { Cars } from "../entity/Car";
 import { User } from "../entity/User";
 import { Trips, Status as TripStatus } from "../entity/Trips";
 import { Between } from "typeorm";
 import { GeolocationHelper } from "./geolocation.helper";
+import { EncryptHelper } from "./encrypt.helper";
 
 export class ORMHelper {
 
   private geolocationHelper = new GeolocationHelper();
+  private encryptHelper = new EncryptHelper();
 
-  public formatParamsForWhere(params: any) {
+  public formatParamsForWhere(params: any): { where: { [k: string]: any } } {
     const response = { where: {} };
     // tslint:disable-next-line: forin
     for (const param in params) {
@@ -41,7 +43,7 @@ export class ORMHelper {
     return cars;
   }
 
-  public getUserBasics(params: Params) {
+  public async getUserBasics(params: Params) {
     const user = {
       created_at: new Date(),
       is_driver: false,
@@ -51,7 +53,8 @@ export class ORMHelper {
       profile_picture: '',
       second_step_auth: false
     }
-    return this.getUserWithEntity({ ...user, ...params });
+    const password = await this.encryptHelper.encryptPassword(params.password);
+    return this.getUserWithEntity({ ...user, ...params, password });
   }
 
   private getTripWithEntity(params: any) {
