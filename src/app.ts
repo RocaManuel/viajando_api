@@ -3,6 +3,7 @@ import express from "express";
 import UsersController from './controllers/users.controller';
 import TripsControllers from './controllers/trips.controller';
 import CarController from './controllers/cars.controller';
+import PaymentController from './controllers/payment.controller';
 
 export class App {
 
@@ -19,6 +20,7 @@ export class App {
     this.app.use('/api/v1/users', UsersController);
     this.app.use('/api/v1/trips', TripsControllers);
     this.app.use('/api/v1/cars', CarController);
+    this.app.use('/api/v1/payment', PaymentController);
   }
 
 }

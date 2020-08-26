@@ -1,6 +1,5 @@
 export const Params: { [k: string]: any } = Object.freeze({
   'GET': {
-    '/api/v1/users': { email: 'string', password: 'string' },
     '/api/v1/trips': { id: 'string' },
     '/api/v1/trips/search_trips': {
       from_lat: 'string',
@@ -14,6 +13,7 @@ export const Params: { [k: string]: any } = Object.freeze({
     '/api/v1/cars': { id: 'string' }
   },
   'POST': {
+    '/api/v1/users/session': { email: 'string', password: 'string' },
     '/api/v1/trips': {
       driver_id: 'number',
       car_id: 'number',
@@ -35,6 +35,13 @@ export const Params: { [k: string]: any } = Object.freeze({
       car_size: 'number',
       car_model: 'string',
       car_age: 'string'
+    },
+    '/api/v1/payment/checkout': {
+      transaction_amount: 'number',
+      token: 'string',
+      description: 'string',
+      installments: 'number',
+      payment_method_id: 'string'
     }
   }
 })
