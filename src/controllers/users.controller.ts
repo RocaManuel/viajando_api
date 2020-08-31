@@ -9,7 +9,6 @@ import { ParamsHelper } from "../helper/params.helper";
 import { CarsSerivce } from "../services/cars.service";
 import { EncryptHelper } from "../helper/encrypt.helper";
 
-
 class UsersController {
 
   private auth = new Auth();
@@ -31,16 +30,16 @@ class UsersController {
   }
 
   private init() {
-    this.router.get('/', (req: any, res: Response) => this.login(req, res));
-    this.router.post('/', this.jsonParser, this.paramsHelper.validateParams, (req: any, res: Response) => this.register(req, res));
+    this.router.post('/session', this.jsonParser, this.paramsHelper.validateParams, (req: any, res: Response) => this.login(req, res));
+    this.router.post('/register', this.jsonParser, this.paramsHelper.validateParams, (req: any, res: Response) => this.register(req, res));
     this.router.get('/cars', this.jsonParser, this.auth.authenticateToken, (req: any, res: Response) => this.getUserCars(req, res));
-    this.router.get('/trips', (req: any, res: Response) => this.login(req, res));
+    this.router.get('/trips', this.jsonParser, this.auth.authenticateToken, (req: any, res: Response) => this.login(req, res));
   }
 
   private async login(req: any, res: Response) {
     try {
-      const params = this.ormHelper.formatParamsForWhere(req.query);
-      params.where.password = await this.encryptionHelper.encryptPassword(req.query.password);
+      const params = this.ormHelper.formatParamsForWhere(req.body);
+      params.where.password = await this.encryptionHelper.encryptPassword(req.body.password);
       const response = await this.usersService.getUser(params);
       if (!response) res.status(404).json({ error: 'not user found' });
 
